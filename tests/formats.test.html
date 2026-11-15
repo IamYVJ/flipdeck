@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>flipdeck format tests</title>
+<style>body{font:14px/1.5 system-ui,sans-serif;max-width:48rem;margin:2rem auto;padding:0 1rem}.ok{color:#1a7f37}.fail{color:#b00020}li{list-style:none}pre{margin:0 0 .5rem 1rem}</style>
+<h1 id="sum">Running…</h1>
+<ul id="out"></ul>
+<script type="module">
+  import * as F from '../js/formats.js';
+  import { run } from './formats.test.js';
+  const res = run(F), n = res.filter((r) => !r.ok).length;
+  const s = document.getElementById('sum');
+  s.textContent = `${res.length - n} / ${res.length} passed`;
+  s.className = n ? 'fail' : 'ok';
+  document.title = (n ? 'FAIL ' : 'PASS ') + s.textContent;
+  for (const r of res) {
+    const li = document.createElement('li');
+    li.className = r.ok ? 'ok' : 'fail';
+    li.textContent = (r.ok ? 'PASS  ' : 'FAIL  ') + r.name;
+    if (!r.ok) { const p = document.createElement('pre'); p.textContent = r.err; li.append(p); }
+    out.append(li);
+  }
+</script>

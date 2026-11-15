@@ -44,7 +44,8 @@ main:focus { outline: none; }
 .top { border-bottom: 1px solid var(--line); }
 .top .row { min-height: 56px; }
 .brand { font: 500 var(--fs-lead)/1 var(--serif); text-decoration: none; padding: var(--s3) 0; }
-main { padding-block: var(--s5) var(--s7); }
+main { padding-block: var(--s5) var(--s6); }
+footer { padding-bottom: var(--s7); font-size: var(--fs-xs); }
 main > * + * { margin-top: var(--s5); }
 .btn {
   font: inherit; min-height: var(--tap); padding: 0 var(--s4); display: inline-flex; align-items: center; justify-content: center;

@@ -89,8 +89,9 @@ function download(name, text, type) {
 let uidN = 0;
 function exportPanel(getDecks, base, label = 'Export') {
   const id = 'lay' + uidN++;
-  const sel = h('select', { id },
+  const sel = h('select', { id, onchange: () => store.setSetting('layout', sel.value) },
     h('option', { value: 'list' }, 'List: front | back'), h('option', { value: 'cards' }, 'Cut-out cards (duplex)'));
+  sel.value = store.settings.layout;
   const dl = (ext, fn, type) => () => {
     const f = fileName(base, ext);
     download(f, fn(getDecks()), type);
@@ -205,12 +206,12 @@ function homeView() {
       h('a', { class: 'deck-name', href: '#/deck/' + enc(d.id) }, d.name),
       h('div', { class: 'deck-meta' }, `${plural(d.cards.length, 'card')} · Edited ${fmt(d.updatedAt)}`),
       d.sample && h('p', { class: 'hint' }, 'A sample to look around with. ',
-        btn('Remove sample', () => { store.deleteDeck(d.id); render(); }, { cls: 'quiet' })),
+        btn('Remove sample', () => { store.deleteDeck(d.id); render(); say('Sample removed'); }, { cls: 'quiet' })),
       h('div', { class: 'acts' },
         d.cards.length ? h('a', { class: 'btn quiet', href: '#/study/' + enc(d.id), 'aria-label': `Study ${d.name}` }, 'Study') : null,
         btn('Rename', rename, { cls: 'quiet', aria: `Rename ${d.name}` }),
         btn('Duplicate', () => { const c = store.duplicateDeck(d.id); render(); say(`Created ${c.name}`); }, { cls: 'quiet', aria: `Duplicate ${d.name}` }),
-        confirmable('Delete', `Delete “${d.name}”?`, () => { store.deleteDeck(d.id); render(); }, `Delete ${d.name}`)));
+        confirmable('Delete', `Delete “${d.name}”?`, () => { store.deleteDeck(d.id); render(); say('Deck deleted'); }, `Delete ${d.name}`)));
     const rename = () => {
       const inp = h('input', { value: d.name, 'aria-label': 'Deck name', maxlength: 80 });
       li.replaceChildren(h('form', {
@@ -485,4 +486,13 @@ store.load();
 render();
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+// "N visitors": GoatCounter read-back for this path; stays hidden if blocked, offline or no data yet.
+const gc = $('script[data-goatcounter]');
+if (gc) {
+  fetch(`${gc.dataset.goatcounter.replace(/\/count$/, '')}/counter/${enc(location.pathname)}.json?start=2026-01-01`)
+    .then((r) => (r.ok ? r.json() : Promise.reject()))
+    .then((d) => { if (d && d.count != null) { $('#visitor-count').textContent = d.count; $('#visitors').hidden = false; } })
+    .catch(() => {});
 }

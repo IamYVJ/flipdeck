@@ -34,6 +34,8 @@ export function run(F) {
   both('--- and fake front matter in back', deck('D', card('Q', 'above\n---\ndeck: Fake\n---\nbelow')));
   both('back ends in tags: line (no tags)', deck('D', card('Q', 'x\ntags: sneaky')));
   both('back ends in tags: line (with tags)', deck('D', card('Q', 'x\nTags: sneaky', ['real'])));
+  both('back is only "tags: x"', deck('D', card('Q', 'tags: x')));
+  both('markdown syntax verbatim', deck('D', card('**b** `c`', '*i* and `a ## b`')));
   both('multiple decks', deck('One', card('a', 'b')), deck('Two', card('c', 'd', ['t']), card('e', 'f')), deck('Empty'));
 
   test('json keeps ids and dates', () => {
@@ -71,9 +73,11 @@ export function run(F) {
   test('err: md empty deck name', () => bad(() => F.fromMarkdown('---\ndeck:\n---\n## Q'), /needs a name/, 2));
   test('err: md text before first card', () => bad(() => F.fromMarkdown('---\ndeck: D\n---\nstray\n## Q'), /before the first/, 4));
   test('err: md empty front', () => bad(() => F.fromMarkdown('---\ndeck: D\n---\n## Q\na\n## \nb'), /no front/, 6));
+  test('err: md empty input', () => bad(() => F.fromMarkdown(' \n\n'), /No decks/));
   test('err: md deck with no cards', () => bad(() => F.fromMarkdown('---\ndeck: D\n---\n'), /No "## "/));
   test('err: unsupported extension', () => bad(() => F.parseAny('x', 'a.pdf'), /Unsupported/));
 
+  test('cleanTags', () => eq(F.cleanTags([' a, b ', 'a', '', 'c  d']), ['a', 'b', 'c d']));
   test('slug + fileName', () => eq([F.slug('Café Ñandú!'), F.slug('日本語'), F.fileName('Spanish Basics', 'json', new Date(2024, 2, 5))], ['cafe-nandu', 'deck', 'flipdeck-spanish-basics-2024-03-05.json']));
   return res;
 }

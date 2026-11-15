@@ -3,7 +3,7 @@ import { uid, iso, cleanName, cleanText, cleanTags } from './formats.js';
 
 const KEY = 'flipdeck:v1';
 const BACKUP = 'flipdeck:backup';
-const DEFAULTS = { shuffle: false };
+const DEFAULTS = { shuffle: false, layout: 'list' };
 
 const S = { version: 1, seeded: false, settings: { ...DEFAULTS }, decks: [] };
 export const status = { ok: true };
@@ -67,7 +67,7 @@ function seed() {
       c('How do I mark what I know?', 'Press **Got it** or **Again** (G / A). At the end, re-study just the Again cards.', ['basics']),
       c('Which formatting works?', '**bold**, *italic* and `code`.\nLine breaks are kept too.', ['formatting']),
       c('Where is my data stored?', 'Only in this browser; nothing is uploaded. **Export** keeps a copy.', ['privacy']),
-      c('How do I add my own cards?', 'Create a deck, fill in Front and Back. Ctrl+Enter saves and readies the next card.', ['basics']),
+      c('How do I add my own cards?', 'Create a deck, then fill in Front and Back. Ctrl+Enter saves and keeps the form ready for the next card.', ['basics']),
     ],
   });
   S.seeded = true;

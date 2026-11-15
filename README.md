@@ -2,10 +2,10 @@
 
 **Live: <https://iamyvj.github.io/flipdeck/>**
 
-A small, private flashcard app. Create decks, study them, and save or load them as files. It runs entirely in your browser: no backend, no accounts, no build step, no network requests.
+A small, private flashcard app. Create decks, study them, and save or load them as files. It runs entirely in your browser: no backend, no accounts, no build step. The only outside request is a cookie-free [GoatCounter](https://www.goatcounter.com/) pageview count (shared site, counted per path); it never sees your decks, and the app works the same if it is blocked.
 
 - Plain HTML, CSS and vanilla JS (ES modules). No dependencies.
-- Decks live in `localStorage`. Nothing is uploaded anywhere.
+- Decks live in `localStorage`. Your decks are never uploaded anywhere.
 - Works offline after the first load (a tiny service worker caches the app).
 - Export to **JSON**, **Markdown** or **PDF** (print stylesheet). Import `.json` and `.md` by button or drag and drop.
 

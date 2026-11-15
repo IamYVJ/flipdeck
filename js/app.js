@@ -379,8 +379,8 @@ function studyView(deck, ro) {
     stage.replaceChildren(cardEl);
     bar.replaceChildren(
       btn(icon('left'), () => step(-1), { cls: 'icon', aria: 'Previous card', disabled: sess.i === 0 }),
-      btn('Again', () => mark('again'), { aria: 'Mark as again' }),
-      btn('Got it', () => mark('got'), { cls: 'primary', aria: 'Mark as got it' }),
+      btn('Again', () => mark('again'), { cls: 'again', aria: 'Mark as again' }),
+      btn('Got it', () => mark('got'), { cls: 'good', aria: 'Mark as got it' }),
       btn(icon('right'), () => step(1), { cls: 'icon', aria: 'Next card' }));
     if (!first) { cardEl.focus({ preventScroll: true }); say(`Card ${sess.i + 1} of ${n}. ${c.front}`); }
     first = false;

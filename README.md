@@ -20,6 +20,7 @@ A small, private flashcard app. Create decks, study them, and save or load them 
 | Re-study misses | At the end of a round choose **Re-study N Again cards** |
 | Export | **Export** on a deck, or **Export all decks** on the home page |
 | PDF | Export → pick a layout → **Save as PDF**, then choose "Save as PDF" as the destination in the print dialog |
+| Light / dark | Sun / moon button in the header. Follows your system until you pick one, then remembers your choice |
 | Import | **Import** or drop a file anywhere on the page |
 | Study a file without saving it | **Open file** (header), or **Study without saving** in the import panel |
 

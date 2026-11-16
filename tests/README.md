@@ -39,4 +39,6 @@ Run through these on each target: **desktop** (Chrome/Edge, Firefox, Safari), **
 - [ ] After one load, switch the network off and reload: the app still opens with your decks
 - [ ] Tab through everything with the keyboard; focus is always visible; screen reader announces flips, imports and errors
 - [ ] Check both light and dark themes
+- [ ] Header toggle switches theme at once, survives a reload with no flash, and its label/icon match the current theme
+- [ ] With the OS set to dark, forcing light via the toggle stays light (and the reverse)
 

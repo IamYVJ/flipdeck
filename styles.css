@@ -24,8 +24,11 @@
   --fs-xs: .75rem; --fs-ui: .875rem; --fs-body: 1rem; --fs-lead: 1.25rem; --fs-h1: 1.75rem;
   --fs-card: clamp(1.5rem, 1.1rem + 2vw, 2.25rem);
 }
+:root[data-theme="light"] { color-scheme: light; }
+/* Dark palette: used when the OS prefers dark (unless the toggle forced light) or when the toggle forced dark. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #14121d; --surface: #1e1b2c; --fg: #f0eef9; --muted: #aca8c4;
     --line: #322e47; --field: #7a7599; --accent: #a995ff; --accent-ink: #c4b8ff; --accent-soft: #2b2547; --on-accent: #14121d;
     --hot: #ff8a4c; --good: #5fd68f; --on-good: #0f2a1a;
@@ -34,6 +37,16 @@
     --c1: #a995ff; --c2: #4fd1c5; --c3: #ff9566; --c4: #ff7aa8; --c5: #7ddb8a;
     --shadow: 0 2px 16px rgb(0 0 0 / .45);
   }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #14121d; --surface: #1e1b2c; --fg: #f0eef9; --muted: #aca8c4;
+  --line: #322e47; --field: #7a7599; --accent: #a995ff; --accent-ink: #c4b8ff; --accent-soft: #2b2547; --on-accent: #14121d;
+  --hot: #ff8a4c; --good: #5fd68f; --on-good: #0f2a1a;
+  --again: #f2b45c; --again-soft: #3a2b14; --again-ink: #f6c887;
+  --back-bg: #26213d; --glow: rgb(169 149 255 / .14);
+  --c1: #a995ff; --c2: #4fd1c5; --c3: #ff9566; --c4: #ff7aa8; --c5: #7ddb8a;
+  --shadow: 0 2px 16px rgb(0 0 0 / .45);
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }

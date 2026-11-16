@@ -23,7 +23,11 @@ function h(tag, props, ...kids) {
   return e;
 }
 const put = (el, ...kids) => el.replaceChildren(...kids.flat().filter((x) => x != null && x !== false));
-const PATHS ={ up: 'M6 15l6-6 6 6', down: 'M6 9l6 6 6-6', left: 'M15 6l-6 6 6 6', right: 'M9 6l6 6-6 6' };
+const PATHS = {
+  up: 'M6 15l6-6 6 6', down: 'M6 9l6 6 6-6', left: 'M15 6l-6 6 6 6', right: 'M9 6l6 6-6 6',
+  sun: 'M12 8a4 4 0 100 8 4 4 0 000-8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+  moon: 'M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z',
+};
 function icon(n) {
   const s = document.createElementNS(NS, 'svg');
   const a = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' };
@@ -456,6 +460,26 @@ addEventListener('hashchange', () => {
   if (skipClear) skipClear = false; else setNotice();
   render();
 });
+
+// ---------- light / dark toggle (default: follow the system) ----------
+const themeBtn = $('#theme');
+const dark = matchMedia('(prefers-color-scheme: dark)');
+const isDark = () => (document.documentElement.dataset.theme || (dark.matches ? 'dark' : 'light')) === 'dark';
+function paintTheme() {
+  const d = isDark(), label = d ? 'Switch to light mode' : 'Switch to dark mode';
+  put(themeBtn, icon(d ? 'sun' : 'moon'));
+  themeBtn.setAttribute('aria-label', label);
+  themeBtn.title = label;
+}
+themeBtn.addEventListener('click', () => {
+  const t = isDark() ? 'light' : 'dark';
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem('flipdeck:theme', t); } catch { /* storage blocked: applies for this visit only */ }
+  paintTheme();
+  say(t === 'dark' ? 'Dark mode' : 'Light mode');
+});
+dark.addEventListener('change', paintTheme);
+paintTheme();
 
 // ---------- file picker + drag and drop ----------
 const fileIn = $('#file');
